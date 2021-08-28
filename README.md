@@ -4,4 +4,4 @@ A beautiful button library for flutter, made easy to use properties which can't 
 
 ## Getting Started
 
-This package is currentry in development.
+This package is currently in development.

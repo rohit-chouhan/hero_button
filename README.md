@@ -1,4 +1,6 @@
-A fast and lite beautiful button library for flutter, made easy to use properties which can't used in default button, user can apply color, icon, padding easily which using extra code.
+<p align="center"><img src="https://github.com/rohit-chouhan/hero_button/blob/main/her_button.jpg?raw=true"></p>
+<p align="center">A fast and lite beautiful button library for flutter, made easy to use properties which can't used in default button, user can apply color, icon, padding easily which using extra code.</p>
+
 
 ### Properties usage
 |   property | description   | example  | dataType |

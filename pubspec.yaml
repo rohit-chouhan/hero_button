@@ -1,7 +1,9 @@
 name: hero_button
-description: A simple library for button to apply properties easily
-version: 1.0.0
+description: A beautiful button library for flutter, made easy to use properties which can't used in default button, user can apply color, icon, padding easily which using extra code.
+version: 1.0.2
 homepage: https://github.com/rohit-chouhan
+author: rohitchouhan.com
+repository: https://github.com/rohit-chouhan/hero_button
 
 environment:
   sdk: ">=2.12.0 <3.0.0"

@@ -1,5 +1,3 @@
-# hero_button `beta`
-
 A fast and lite beautiful button library for flutter, made easy to use properties which can't used in default button, user can apply color, icon, padding easily which using extra code.
 
 ### Properties usage

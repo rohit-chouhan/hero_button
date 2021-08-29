@@ -13,3 +13,6 @@
 ## 1.0.3
 * Example added
 
+## 1.0.4
+* Readme modified, score fixed
+

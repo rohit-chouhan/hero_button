@@ -10,3 +10,6 @@
 ## 1.0.2
 * Bug fixed
 
+## 1.0.3
+* Example added
+

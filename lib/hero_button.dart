@@ -1,74 +1,132 @@
+library hero_button;
+
 import 'package:flutter/material.dart';
 
 class HeroButton extends StatefulWidget {
-  final String? label;
-  final bool? fullWidth;
+  final String tag;
+  final Widget child;
+  final VoidCallback? onPressed;
+  final Color backgroundColor;
+  final double elevation;
+  final OutlinedBorder shape;
+  final bool isLoading;
+  final Widget? loadingIndicator;
+  final Duration animationDuration;
+  final Gradient? gradient;
+  final BoxShadow? boxShadow;
+  final TextStyle? textStyle;
+  final double? width;
   final double? height;
-  final Function()? onPressed;
-  final EdgeInsetsGeometry? padding;
-  final Color? textColor;
-  final Color? backColor;
-  final bool? borderRound;
-  final double? textSize;
-  final IconData? preIcon;
-  final IconData? postIcon;
-  HeroButton({
-    this.fullWidth,
-    this.label,
-    @required this.onPressed,
-    this.padding,
-    this.textColor,
-    this.backColor,
-    this.borderRound,
+  final EdgeInsetsGeometry padding;
+  final bool useHero;
+
+  const HeroButton({
+    Key? key,
+    required this.tag,
+    required this.child,
+    this.onPressed,
+    this.backgroundColor = Colors.blue,
+    this.elevation = 2.0,
+    this.shape = const RoundedRectangleBorder(),
+    this.isLoading = false,
+    this.loadingIndicator,
+    this.animationDuration = const Duration(milliseconds: 300),
+    this.gradient,
+    this.boxShadow,
+    this.textStyle,
+    this.width,
     this.height,
-    this.textSize,
-    this.preIcon,
-    this.postIcon,
-  });
+    this.padding = const EdgeInsets.all(16.0),
+    this.useHero = true,
+  }) : super(key: key);
 
   @override
   _HeroButtonState createState() => _HeroButtonState();
 }
 
-class _HeroButtonState extends State<HeroButton> {
+class _HeroButtonState extends State<HeroButton>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller =
+        AnimationController(vsync: this, duration: widget.animationDuration);
+    _animation = CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
+
+    if (widget.isLoading) {
+      _controller.forward();
+    } else {
+      _controller.reverse();
+    }
+  }
+
+  @override
+  void didUpdateWidget(HeroButton oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.isLoading != oldWidget.isLoading) {
+      if (widget.isLoading) {
+        _controller.forward();
+      } else {
+        _controller.reverse();
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: widget.padding!,
-      child: SizedBox(
-          width: widget.fullWidth == true ? double.infinity : null,
-          height: widget.height,
-          child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                shape: widget.borderRound == true ? StadiumBorder() : null,
-                primary: widget.backColor, // background
-                onPrimary: widget.textColor, // foreground
-              ),
-              onPressed: widget.onPressed,
-              child: RichText(
-                text: TextSpan(
-                  children: [
-                    WidgetSpan(
-                      child: Icon(
-                          widget.preIcon != null ? widget.preIcon : null,
-                          size: widget.preIcon != null
-                              ? widget.textSize! + 5
-                              : 0),
-                    ),
-                    TextSpan(
-                      text: widget.label,
-                      style: TextStyle(fontSize: widget.textSize),
-                    ),
-                    WidgetSpan(
-                      child: Icon(
-                          widget.postIcon != null ? widget.postIcon : null,
-                          size: widget.postIcon != null
-                              ? widget.textSize! + 5
-                              : 0),
-                    ),
-                  ],
-                ),
-              ))),
+    final button = ElevatedButton(
+      onPressed: widget.isLoading ? null : widget.onPressed,
+      style: ElevatedButton.styleFrom(
+        backgroundColor:
+            widget.gradient == null ? widget.backgroundColor : null,
+        elevation: widget.elevation,
+        shape: widget.shape,
+        padding: widget.padding,
+        textStyle: widget.textStyle,
+        shadowColor: widget.boxShadow?.color,
+      ).copyWith(
+        foregroundColor: MaterialStateProperty.all(widget.textStyle?.color),
+        shape: MaterialStateProperty.all(widget.shape),
+      ),
+      child: widget.isLoading
+          ? widget.loadingIndicator ?? CircularProgressIndicator()
+          : widget.child,
     );
+
+    return widget.useHero
+        ? Hero(
+            tag: widget.tag,
+            child: Material(
+              color: Colors.transparent,
+              child: Container(
+                width: widget.width,
+                height: widget.height,
+                decoration: BoxDecoration(
+                  gradient: widget.gradient,
+                  boxShadow:
+                      widget.boxShadow != null ? [widget.boxShadow!] : [],
+                ),
+                child: button,
+              ),
+            ),
+          )
+        : Container(
+            width: widget.width,
+            height: widget.height,
+            decoration: BoxDecoration(
+              gradient: widget.gradient,
+              boxShadow: widget.boxShadow != null ? [widget.boxShadow!] : [],
+            ),
+            child: button,
+          );
   }
 }

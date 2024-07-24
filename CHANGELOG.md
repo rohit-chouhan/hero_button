@@ -1,18 +1,28 @@
+## 2.0.0
+
+- code refactored
+- new featured added
+
 ## 0.0.1
-* initial release.
+
+- initial release.
 
 ## 1.0.0
-* Origial Publish
+
+- original Publish
 
 ## 1.0.1
-* Publish again
+
+- Publish again
 
 ## 1.0.2
-* Bug fixed
+
+- Bug fixed
 
 ## 1.0.3
-* Example added
+
+- Example added
 
 ## 1.0.4
-* Readme modified, score fixed
 
+- Readme modified, score fixed

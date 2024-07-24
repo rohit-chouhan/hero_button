@@ -47,14 +47,14 @@ class HeroButton extends StatefulWidget {
 class _HeroButtonState extends State<HeroButton>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  late Animation<double> _animation;
+  late Animation<double> animation;
 
   @override
   void initState() {
     super.initState();
     _controller =
         AnimationController(vsync: this, duration: widget.animationDuration);
-    _animation = CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
+    animation = CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
 
     if (widget.isLoading) {
       _controller.forward();
@@ -94,8 +94,8 @@ class _HeroButtonState extends State<HeroButton>
         textStyle: widget.textStyle,
         shadowColor: widget.boxShadow?.color,
       ).copyWith(
-        foregroundColor: MaterialStateProperty.all(widget.textStyle?.color),
-        shape: MaterialStateProperty.all(widget.shape),
+        foregroundColor: WidgetStateProperty.all(widget.textStyle?.color),
+        shape: WidgetStateProperty.all(widget.shape),
       ),
       child: widget.isLoading
           ? widget.loadingIndicator ?? CircularProgressIndicator()
